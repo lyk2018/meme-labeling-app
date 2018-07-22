@@ -1,0 +1,33 @@
+<html layout:decorate="~{layout.html}" lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+
+<section layout:fragment="content">
+
+    <div class="container">
+        <form th:action="@{/users/__${user.id}__}" th:method="PUT" th:object="${user}">
+            <div class="form-group">
+                <label>Username</label>
+                <input class="form-control" th:field="*{username}" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" th:field="*{email}" />
+            </div>
+
+            <div class="form-group">
+                <label>First Name</label>
+                <input class="form-control" th:field="*{firstName}" />
+            </div>
+
+            <div class="form-group">
+                <label>Last Name</label>
+                <input class="form-control" th:field="*{lastName}" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+</section>
+
+</html>

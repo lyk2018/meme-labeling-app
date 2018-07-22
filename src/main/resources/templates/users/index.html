@@ -1,0 +1,33 @@
+<html layout:decorate="~{layout.html}" lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+
+<section layout:fragment="content">
+
+    <div class="container">
+
+        <div class="row">
+            <a th:href="@{/users/new}">Add new user</a>
+        </div>
+
+        <div class="row">
+            <div th:each="user : ${users}" th:object="${user}"
+                 class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span th:text="*{firstName}"></span>
+                        <span th:text="*{lastName}"></span>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="*{username}"></h6>
+                    <p class="card-text" th:text="*{email}"></p>
+                    <a th:href="@{users/__*{id}__}" class="card-link">Show</a>
+                    <a th:href="@{users/__*{id}__/edit}" class="card-link">Edit</a>
+                    <form th:action="@{/users/__*{id}__}" th:method="DELETE">
+                        <button type="submit" class="btn btn-link card-link">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</html>
