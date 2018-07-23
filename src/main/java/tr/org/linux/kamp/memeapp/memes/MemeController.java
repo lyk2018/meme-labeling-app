@@ -28,6 +28,13 @@ public class MemeController {
         return "memes/new";
     }
 
+    @GetMapping("/{id}")
+    String show(Model model, @PathVariable("id") Long id) {
+        final Meme meme = memeService.findById(id);
+        model.addAttribute("meme", meme);
+        return "memes/show";
+    }
+
     @PostMapping
     String create(Meme meme, @PathVariable Long userId) {
 

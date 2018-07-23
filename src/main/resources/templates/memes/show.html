@@ -1,0 +1,28 @@
+<html layout:decorate="~{layout.html}" lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+
+<section layout:fragment="content">
+
+    <style>
+        #meme {
+            max-width: 100%;
+        }
+    </style>
+
+    <div class="container">
+
+        <section class="jumbotron text-center">
+            <div class="container">
+
+                <h1 th:text="${meme.name}"></h1>
+
+                <img id="meme" th:src="${meme.url}" class="rounded" alt="Meme">
+
+                <p class="lead text-muted" th:text="${meme.description}"></p>
+                <p class="lead text-muted" th:text="${meme.artist}"></p>
+            </div>
+        </section>
+
+    </div>
+</section>
+</html>
