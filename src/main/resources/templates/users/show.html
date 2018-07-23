@@ -13,10 +13,35 @@
                             <img src="https://www.drupal.org/files/issues/default-avatar.png" class="rounded" alt="Default avatar">
                         </div>
                     </div>
-                    <div class="col-8">
-                        <h1 class="jumbotron-heading">[[${user.firstName}]] [[${user.lastName}]]</h1>
-                        <p class="lead text-muted" th:text="${user.username}"></p>
-                        <p class="lead text-muted" th:text="${user.email}"></p>
+                    <div class="col-8" th:object="${user}">
+                        <h1 class="jumbotron-heading">[[${user?.firstName}]] [[${user?.lastName}]]</h1>
+                        <p class="lead text-muted" th:text="*{username}"></p>
+                        <p class="lead text-muted" th:text="*{email}"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <a th:href="@{/users/__${user.id}__/memes/new}">Add new meme</a>
+        </section>
+
+        <section>
+            <h3>Memes</h3>
+            <div class="row">
+                <div class="col-md-4" th:each="meme : ${memes}" th:object="${meme}">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" alt="Thumbnail [100%x225]" th:src="*{url}" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
+                        <div class="card-body">
+                            <p class="card-text" th:text="*{description}"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </div>
+                                <small class="text-muted" th:text="*{artist}"></small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

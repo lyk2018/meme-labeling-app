@@ -2,18 +2,17 @@ package tr.org.linux.kamp.memeapp.users;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tr.org.linux.kamp.memeapp.memes.Meme;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "APP_USER")
-class User implements Serializable {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue
@@ -27,4 +26,17 @@ class User implements Serializable {
 
     private String lastName;
 
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Set<Meme> memes;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }

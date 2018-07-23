@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import tr.org.linux.kamp.memeapp.memes.Meme;
+import tr.org.linux.kamp.memeapp.memes.MemeService;
 
 @Controller
 @RequestMapping("/users")
@@ -11,6 +13,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MemeService memeService;
 
     @GetMapping
     String findAll(Model model) {
@@ -22,7 +27,9 @@ public class UserController {
     @GetMapping("/{id}")
     String show(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
+        Iterable<Meme> memes = memeService.findAllByUserId(id);
         model.addAttribute("user", user);
+        model.addAttribute("memes", memes);
         return "users/show";
     }
 

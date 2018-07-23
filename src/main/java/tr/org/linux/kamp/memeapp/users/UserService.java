@@ -3,11 +3,10 @@ package tr.org.linux.kamp.memeapp.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-class UserService {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -16,7 +15,7 @@ class UserService {
         return userRepository.findAll();
     }
 
-    User findById(Long id) {
+    public User findById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.get();
     }
