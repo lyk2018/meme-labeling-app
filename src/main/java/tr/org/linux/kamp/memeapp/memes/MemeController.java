@@ -3,10 +3,7 @@ package tr.org.linux.kamp.memeapp.memes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import tr.org.linux.kamp.memeapp.users.User;
 import tr.org.linux.kamp.memeapp.users.UserService;
 
@@ -43,6 +40,24 @@ public class MemeController {
 
         memeService.save(meme);
         return "redirect:/users/{userId}/";
+    }
+
+    @GetMapping("/{id}/edit")
+    String editForm(@PathVariable("userId") Long userId, @PathVariable("id") Long memeId, Model model) {
+        final Meme meme = memeService.findById(memeId);
+
+        model.addAttribute("meme", meme);
+        model.addAttribute("userId", userId);
+        return "memes/edit";
+    }
+
+    @PutMapping("/{id}")
+    String edit(@PathVariable("id") Long id, Meme meme) {
+
+        memeService.update(meme);
+
+        //return "redirect:/users/" + userId + "/memes/" + memeId + "/edit";
+        return "redirect:edit";
     }
 
 }

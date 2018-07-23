@@ -1,0 +1,42 @@
+<html layout:decorate="~{layout.html}" lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+
+<section layout:fragment="content">
+
+    <div class="container">
+
+        <h1 th:text="#{meme.edit.title}">Meme Editing</h1>
+
+        <form th:action="@{/users/__${userId}__/memes/__*{id}__}" th:method="PUT" th:object="${meme}">
+
+            <div class="form-group">
+                <label th:text="#{name}">Title</label>
+                <input class="form-control" th:field="*{name}" />
+            </div>
+
+            <div class="form-group">
+                <label>URL</label>
+                <input class="form-control" th:field="*{url}" />
+            </div>
+
+            <div class="form-group">
+                <img th:src="*{url}" th:alt="#{meme.alt_text}">
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" th:field="*{description}" />
+            </div>
+
+            <div class="form-group">
+                <label>Artist</label>
+                <input class="form-control" th:field="*{artist}" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+</section>
+
+</html>

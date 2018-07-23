@@ -2,6 +2,7 @@ package tr.org.linux.kamp.memeapp.memes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
 import java.util.Optional;
 
@@ -20,8 +21,8 @@ public class MemeService {
     }
 
     Meme findById(Long id) {
-        Optional<Meme> memeOptional = memeRepository.findById(id);
-        return memeOptional.get();
+        final Optional<Meme> memeOptional = memeRepository.findById(id);
+        return memeOptional.orElseThrow(ResourceNotFoundException::new);
     }
 
     Meme save(Meme meme) {
@@ -30,6 +31,21 @@ public class MemeService {
 
     void delete(Long id) {
         memeRepository.deleteById(id);
+    }
+
+    /**
+     * @param meme the meme instance coming from HTML form
+     * @return updated meme
+     */
+    void update(Meme meme) {
+        final Meme persistentMeme = this.findById(meme.getId());
+
+        persistentMeme.setName(meme.getName());
+        persistentMeme.setArtist(meme.getArtist());
+        persistentMeme.setDescription(meme.getDescription());
+        persistentMeme.setUrl(meme.getUrl());
+
+        this.save(persistentMeme);
     }
 
 }
