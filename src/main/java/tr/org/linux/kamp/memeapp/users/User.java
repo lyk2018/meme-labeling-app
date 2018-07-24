@@ -6,6 +6,10 @@ import lombok.Setter;
 import tr.org.linux.kamp.memeapp.memes.Meme;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -20,8 +24,12 @@ public class User implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @Size(min = 3)
+    @Column(unique = true)
     private String username;
 
+    @NotBlank
+    @Column(unique = true)
     private String email;
 
     private String firstName;

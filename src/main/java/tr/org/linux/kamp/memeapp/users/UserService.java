@@ -1,6 +1,9 @@
 package tr.org.linux.kamp.memeapp.users;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
@@ -9,6 +12,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -38,5 +42,9 @@ public class UserService {
         persistedUser.setUsername(user.getUsername());
         persistedUser.setFirstName(user.getFirstName());
         persistedUser.setLastName(user.getLastName());
+    }
+
+    boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 }

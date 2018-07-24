@@ -1,26 +1,39 @@
 package tr.org.linux.kamp.memeapp.users;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import tr.org.linux.kamp.memeapp.memes.MemeService;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
 @AllArgsConstructor
+@Slf4j
 public class UserController {
 
     private final UserService userService;
 
     private final MemeService memeService;
 
+    private final UserValidator userValidator;
+
+    @InitBinder("user")
+    void addCustomUserValidator(WebDataBinder binder) {
+        binder.addValidators(this.userValidator);
+    }
+
     @GetMapping
     String findAll(Model model) {
         Iterable<User> users = userService.findAll();
         model.addAttribute("users", users);
+
         return "users/index";
     }
 
@@ -39,7 +52,11 @@ public class UserController {
     }
 
     @PostMapping("")
-    String create(User user) {
+    String create(Model model, @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            return "users/new";
+        }
         userService.save(user);
         return "redirect:/users";
     }
@@ -61,6 +78,17 @@ public class UserController {
     String delete(@PathVariable Long id) {
         userService.delete(id);
         return "redirect:/users";
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    String handleUniqueConstraintException(ConstraintViolationException e, Model model) {
+
+        log.error(e.getMessage(), e);
+
+        User user = new User();
+        model.addAttribute("user", user);
+        model.addAttribute("message", "Username already exists.");
+        return "users/new";
     }
 
 }
