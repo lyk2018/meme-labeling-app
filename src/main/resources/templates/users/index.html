@@ -19,8 +19,8 @@
                     </h5>
                     <h6 class="card-subtitle mb-2 text-muted" th:text="*{username}"></h6>
                     <p class="card-text" th:text="*{email}"></p>
-                    <a th:href="@{users/__*{id}__}" class="card-link">Show</a>
-                    <a th:href="@{users/__*{id}__/edit}" class="card-link">Edit</a>
+                    <a th:href="@{/users/__*{id}__}" class="card-link">Show</a>
+                    <a th:href="@{/users/__*{id}__/edit}" class="card-link">Edit</a>
                     <form th:action="@{/users/__*{id}__}" th:method="DELETE">
                         <button type="submit" class="btn btn-link card-link">Delete</button>
                     </form>

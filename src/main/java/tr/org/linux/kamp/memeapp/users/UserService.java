@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -16,9 +17,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     public User findById(Long id) {
         final Optional<User> userOptional = userRepository.findById(id);
-        return userOptional.orElseThrow(ResourceNotFoundException::new);
+        final User user = userOptional.orElseThrow(ResourceNotFoundException::new);
+        user.getMemes().isEmpty();
+        return user;
     }
 
     User save(User user) {

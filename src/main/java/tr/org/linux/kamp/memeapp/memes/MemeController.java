@@ -1,5 +1,6 @@
 package tr.org.linux.kamp.memeapp.memes;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,19 +10,19 @@ import tr.org.linux.kamp.memeapp.users.UserService;
 
 @Controller
 @RequestMapping("/users/{userId}/memes")
-public class MemeController {
+@AllArgsConstructor
+class MemeController {
 
-    @Autowired
-    private MemeService memeService;
+    private final MemeService memeService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/new")
     String newMeme(Model model, @PathVariable Long userId) {
         Meme meme = new Meme();
         model.addAttribute("userId", userId);
         model.addAttribute("meme", meme);
+
         return "memes/new";
     }
 
@@ -57,7 +58,7 @@ public class MemeController {
         memeService.update(meme);
 
         //return "redirect:/users/" + userId + "/memes/" + memeId + "/edit";
-        return "redirect:edit";
+        return "redirect:" + id + "/edit";
     }
 
 }

@@ -1,14 +1,16 @@
 package tr.org.linux.kamp.memeapp.users;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tr.org.linux.kamp.memeapp.memes.Meme;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "APP_USER")

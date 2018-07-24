@@ -27,9 +27,7 @@ public class UserController {
     @GetMapping("/{id}")
     String show(@PathVariable Long id, Model model) {
         User user = userService.findById(id);
-        Iterable<Meme> memes = memeService.findAllByUserId(id);
         model.addAttribute("user", user);
-        model.addAttribute("memes", memes);
         return "users/show";
     }
 

@@ -29,7 +29,7 @@
         <section>
             <h3>Memes</h3>
             <div class="row">
-                <div class="col-md-4" th:each="meme : ${memes}" th:object="${meme}">
+                <div class="col-md-4" th:each="meme : ${user.memes}" th:object="${meme}">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top" alt="Thumbnail [100%x225]" th:src="*{url}" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
                         <div class="card-body">
@@ -39,7 +39,9 @@
                                     <a th:href="@{/users/__${user.id}__/memes/__${meme.id}__}" class="btn btn-sm btn-outline-secondary">
                                         View
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <a th:href="@{/users/__${user.id}__/memes/__${meme.id}__/edit}" class="btn btn-sm btn-outline-secondary">
+                                        Edit
+                                    </a>
                                 </div>
                                 <small class="text-muted" th:text="*{artist}"></small>
                             </div>
