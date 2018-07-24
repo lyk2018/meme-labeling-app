@@ -1,16 +1,17 @@
 package tr.org.linux.kamp.memeapp.memes;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class MemeService {
 
-    @Autowired
-    private MemeRepository memeRepository;
+    private final MemeRepository memeRepository;
 
     Iterable<Meme> findAll() {
         return memeRepository.findAll();
@@ -37,7 +38,8 @@ public class MemeService {
      * @param meme the meme instance coming from HTML form
      * @return updated meme
      */
-    void update(Meme meme) {
+    @Transactional
+    public void update(Meme meme) {
         final Meme persistentMeme = this.findById(meme.getId());
 
         persistentMeme.setName(meme.getName());
@@ -45,7 +47,7 @@ public class MemeService {
         persistentMeme.setDescription(meme.getDescription());
         persistentMeme.setUrl(meme.getUrl());
 
-        this.save(persistentMeme);
+//        this.save(persistentMeme);
     }
 
 }

@@ -1,21 +1,19 @@
 package tr.org.linux.kamp.memeapp.users;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import tr.org.linux.kamp.memeapp.memes.Meme;
 import tr.org.linux.kamp.memeapp.memes.MemeService;
 
 @Controller
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private MemeService memeService;
+    private final MemeService memeService;
 
     @GetMapping
     String findAll(Model model) {
