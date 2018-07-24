@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tr.org.linux.kamp.memeapp.memes.MemeService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/users")
 @AllArgsConstructor
@@ -50,15 +52,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    String update(@PathVariable Long id, User user) {
-        User persistedUser = userService.findById(id);
-
-        persistedUser.setEmail(user.getEmail());
-        persistedUser.setUsername(user.getUsername());
-        persistedUser.setFirstName(user.getFirstName());
-        persistedUser.setLastName(user.getLastName());
-
-        userService.save(persistedUser);
+    String update(User user) {
+        userService.update(user);
         return "redirect:/users/{id}";
     }
 

@@ -5,11 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tr.org.linux.kamp.memeapp.users.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,5 +30,8 @@ public class Meme implements Serializable {
 
     @ManyToOne
     private User owner;
+
+    @ManyToMany
+    private Set<Label> labels = new HashSet<>();
 
 }

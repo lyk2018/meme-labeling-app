@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -29,4 +30,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    @Transactional
+    public void update(User user) {
+        final User persistedUser = this.findById(user.getId());
+
+        persistedUser.setEmail(user.getEmail());
+        persistedUser.setUsername(user.getUsername());
+        persistedUser.setFirstName(user.getFirstName());
+        persistedUser.setLastName(user.getLastName());
+    }
 }
