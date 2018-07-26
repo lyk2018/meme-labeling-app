@@ -6,8 +6,9 @@
     <div class="nav-scroller bg-white box-shadow">
         <div class="container">
             <nav class="nav nav-underline">
-                <a class="nav-link" th:href="@{/users(sort=username:ASC)}">username ASC</a>
-                <a class="nav-link" th:href="@{/users(sort=username:DESC)}">username DESC</a>
+                <a class="nav-link disabled" href="javascript:void(0)">Sort By: </a>
+                <a class="nav-link active" th:href="@{/users(page=${users.number}, size=${users.size}, sort='username,ASC')}">Username ASC</a>
+                <a class="nav-link active" th:href="@{/users(page=${users.number}, size=${users.size}, sort='username,DESC')}">Username DESC</a>
             </nav>
         </div>
     </div>
