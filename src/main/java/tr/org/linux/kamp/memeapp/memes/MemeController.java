@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tr.org.linux.kamp.memeapp.users.User;
 import tr.org.linux.kamp.memeapp.users.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users/{userId}/memes")
@@ -34,7 +37,7 @@ class MemeController {
     }
 
     @PostMapping
-    String create(Meme meme, @PathVariable Long userId) {
+    String create(@Valid Meme meme, BindingResult bindingResult, @PathVariable Long userId) {
 
         User user = userService.findById(userId);
         meme.setOwner(user);

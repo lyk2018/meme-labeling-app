@@ -6,6 +6,8 @@ import lombok.Setter;
 import tr.org.linux.kamp.memeapp.users.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +22,7 @@ public class Meme implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @NotBlank
     private String name;
 
     private String description;
@@ -28,6 +31,7 @@ public class Meme implements Serializable {
 
     private String url;
 
+    @NotNull
     @ManyToOne
     private User owner;
 
