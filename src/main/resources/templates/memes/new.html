@@ -5,9 +5,14 @@
 
     <div class="container">
         <form th:action="@{/users/__${userId}__/memes}" th:method="POST" th:object="${meme}">
+
+            <!--/* we send an empty owner just to pass validation */-->
+            <input type="hidden" th:field="*{owner.id}" >
+
             <div class="form-group">
                 <label>Name</label>
-                <input class="form-control" th:field="*{name}" />
+                <input class="form-control" th:field="*{name}" th:errorclass="is-invalid" />
+                <span class="invalid-feedback" th:errors="*{name}">Error</span>
             </div>
 
             <div class="form-group">
@@ -17,7 +22,8 @@
 
             <div class="form-group">
                 <label>Url</label>
-                <input class="form-control" th:field="*{url}" />
+                <input class="form-control" th:field="*{url}" th:errorclass="is-invalid" />
+                <span class="invalid-feedback" th:errors="*{url}">Error</span>
             </div>
 
             <div class="form-group">

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.memes WHERE u.id = :userId")
     Optional<User> findByIdWithMemes(@Param("userId") Long id);

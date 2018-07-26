@@ -2,8 +2,6 @@ package tr.org.linux.kamp.memeapp.users;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
@@ -38,8 +36,12 @@ public class UserService {
     public void update(User user) {
         final User persistedUser = this.findById(user.getId());
 
+        if (!persistedUser.getUsername().equals(user.getUsername())) {
+            log.error("Fraudulent user! {}", persistedUser);
+        }
+
         persistedUser.setEmail(user.getEmail());
-        persistedUser.setUsername(user.getUsername());
+        //persistedUser.setUsername(user.getUsername());
         persistedUser.setFirstName(user.getFirstName());
         persistedUser.setLastName(user.getLastName());
     }

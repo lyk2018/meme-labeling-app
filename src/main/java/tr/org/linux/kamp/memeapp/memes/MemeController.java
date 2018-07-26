@@ -1,11 +1,11 @@
 package tr.org.linux.kamp.memeapp.memes;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tr.org.linux.kamp.memeapp.users.User;
 import tr.org.linux.kamp.memeapp.users.UserService;
 
@@ -39,7 +39,11 @@ class MemeController {
     @PostMapping
     String create(@Valid Meme meme, BindingResult bindingResult, @PathVariable Long userId) {
 
-        User user = userService.findById(userId);
+        if (bindingResult.hasErrors()) {
+            return "memes/new";
+        }
+
+        final User user = userService.findById(userId);
         meme.setOwner(user);
 
         memeService.save(meme);
@@ -56,9 +60,15 @@ class MemeController {
     }
 
     @PutMapping("/{id}")
-    String edit(@PathVariable("id") Long id, Meme meme) {
+    String edit(@PathVariable("id") Long id, @Valid Meme meme, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "memes/edit";
+        }
 
         memeService.update(meme);
+//        redirectAttributes.addAttribute("message", "Meme updated.");
+        redirectAttributes.addFlashAttribute("message", "Meme updated.");
 
         //return "redirect:/users/" + userId + "/memes/" + memeId + "/edit";
         return "redirect:" + id + "/edit";

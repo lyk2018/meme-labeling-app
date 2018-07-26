@@ -7,12 +7,14 @@
         <form th:action="@{/users/__${user.id}__}" th:method="PUT" th:object="${user}">
             <div class="form-group">
                 <label>Username</label>
-                <input class="form-control" th:field="*{username}" />
+                <input class="form-control" th:field="*{username}"  th:errorclass="is-invalid" readonly />
+                <span class="invalid-feedback" th:errors="*{username}">Error</span>
             </div>
 
             <div class="form-group">
                 <label>Email</label>
-                <input class="form-control" th:field="*{email}" />
+                <input class="form-control" th:field="*{email}"  th:errorclass="is-invalid" />
+                <span class="invalid-feedback" th:errors="*{email}">Error</span>
             </div>
 
             <div class="form-group">

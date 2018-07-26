@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import tr.org.linux.kamp.memeapp.memes.MemeService;
 
 import javax.validation.Valid;
 
@@ -19,8 +18,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-
-    private final MemeService memeService;
 
     private final UserValidator userValidator;
 
@@ -69,7 +66,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    String update(User user) {
+    String update(@Valid User user, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "users/edit";
+        }
+
         userService.update(user);
         return "redirect:/users/{id}";
     }
