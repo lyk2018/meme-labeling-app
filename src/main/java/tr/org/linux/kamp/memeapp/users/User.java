@@ -38,6 +38,13 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<Meme> memes;
 
+    public User(@Size(min = 3) @NotBlank String username, @NotBlank String email, String firstName, String lastName) {
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
         return "User{" +

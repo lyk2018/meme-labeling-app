@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tr.org.linux.kamp.memeapp.users.User;
 import tr.org.linux.kamp.memeapp.users.UserRepository;
 import tr.org.linux.kamp.memeapp.users.UserService;
 
@@ -19,11 +20,18 @@ public class MemeAppApplication {
     }
 
     @Bean
-    CommandLineRunner myMethod() {
+    CommandLineRunner myMethod(UserService userService) {
         return args -> {
-            log.info("App has started!!!");
-            log.info("Line 2");
-
+        	if (!userService.existsByUsername("username0")) {
+				for (int i = 0; i < 40; i++) {
+					String username = "username" + i;
+					String email = "user" + i + "@mailinator.com";
+					String firstName = "First" + i;
+					String lastName = "Doe";
+					User user = new User(username, email, firstName, lastName);
+					userService.save(user);
+				}
+			}
         };
     }
 

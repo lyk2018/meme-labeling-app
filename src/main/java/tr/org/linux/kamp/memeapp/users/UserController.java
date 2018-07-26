@@ -3,6 +3,9 @@ package tr.org.linux.kamp.memeapp.users;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping
-    String findAll(Model model) {
-        Iterable<User> users = userService.findAll();
+    String findAll(Model model, Pageable pageable) {
+        Page<User> users = userService.findAll(pageable);
         model.addAttribute("users", users);
 
         return "users/index";

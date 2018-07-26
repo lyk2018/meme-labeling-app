@@ -2,6 +2,8 @@ package tr.org.linux.kamp.memeapp.users;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
@@ -19,12 +21,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
     public User findById(Long id) {
         final Optional<User> userOptional = userRepository.findByIdWithMemes(id);
         return userOptional.orElseThrow(ResourceNotFoundException::new);
     }
 
-    User save(User user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 
@@ -46,7 +52,7 @@ public class UserService {
         persistedUser.setLastName(user.getLastName());
     }
 
-    boolean existsByUsername(String username) {
+    public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
 }
