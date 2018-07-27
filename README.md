@@ -1,3 +1,4 @@
+* [Spring Dependency Versions](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml)
 * https://docs.spring.io/spring-data/jpa/docs/2.1.0.M1/reference/html/#jpa.query-methods.query-creation
 * https://httpstatuses.com/
 * https://docs.oracle.com/javaee/7/api/javax/validation/constraints/package-summary.html
