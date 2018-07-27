@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        final Optional<User> userOptional = userRepository.findByIdWithMemes(id);
+        final Optional<User> userOptional = userRepository.findById(id);
         return userOptional.orElseThrow(ResourceNotFoundException::new);
     }
 

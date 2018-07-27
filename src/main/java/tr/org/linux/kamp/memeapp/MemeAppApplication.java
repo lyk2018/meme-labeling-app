@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tr.org.linux.kamp.memeapp.memes.Meme;
+import tr.org.linux.kamp.memeapp.memes.MemeService;
 import tr.org.linux.kamp.memeapp.users.User;
 import tr.org.linux.kamp.memeapp.users.UserRepository;
 import tr.org.linux.kamp.memeapp.users.UserService;
@@ -20,7 +22,7 @@ public class MemeAppApplication {
     }
 
     @Bean
-    CommandLineRunner myMethod(UserService userService) {
+    CommandLineRunner myMethod(UserService userService, MemeService memeService) {
         return args -> {
         	if (!userService.existsByUsername("username0")) {
 				for (int i = 0; i < 40; i++) {
@@ -30,6 +32,16 @@ public class MemeAppApplication {
 					String lastName = "Doe";
 					User user = new User(username, email, firstName, lastName);
 					userService.save(user);
+
+					for (int j = 0; j < 50; j++) {
+						String name = "meme name " + j;
+						String description = "some description here";
+						String artist = "Artist " + j;
+						String url = "https://picsum.photos/500/500?image=" + j;
+						Meme meme = new Meme(name, description, artist, url, user);
+						memeService.save(meme);
+					}
+
 				}
 			}
         };

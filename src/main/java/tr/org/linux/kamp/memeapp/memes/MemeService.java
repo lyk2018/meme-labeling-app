@@ -1,6 +1,8 @@
 package tr.org.linux.kamp.memeapp.memes;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tr.org.linux.kamp.memeapp.exceptions.ResourceNotFoundException;
 
@@ -17,6 +19,10 @@ public class MemeService {
         return memeRepository.findAll();
     }
 
+    public Page<Meme> findAll(Long ownerId, Pageable pageable) {
+        return memeRepository.findAllByOwnerId(ownerId, pageable);
+    }
+
     public Iterable<Meme> findAllByUserId(Long id) {
         return memeRepository.findAllByOwnerId(id);
     }
@@ -26,7 +32,7 @@ public class MemeService {
         return memeOptional.orElseThrow(ResourceNotFoundException::new);
     }
 
-    Meme save(Meme meme) {
+    public Meme save(Meme meme) {
         return memeRepository.save(meme);
     }
 

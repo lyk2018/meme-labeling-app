@@ -29,7 +29,7 @@
         <section>
             <h3>Memes</h3>
             <div class="row">
-                <div class="col-md-4" th:each="meme : ${user.memes}" th:object="${meme}">
+                <div class="col-md-4" th:each="meme : ${memes}" th:object="${meme}">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top" alt="Thumbnail [100%x225]" th:src="*{url}" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
                         <div class="card-body">
@@ -48,6 +48,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${memes.number == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/users/__${user.id}__/(page=${memes.number - 1}, size=${memes.size})}">Previous</a>
+                        </li>
+                        <li class="page-item" th:classappend="${memes.number == (index - 1)} ? 'active'"
+                            th:each="index : ${#numbers.sequence(1, memes.totalPages)}">
+                            <a class="page-link" th:href="@{/users/__${user.id}__/(page=${index-1}, size=${memes.size})}" th:text="${index}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${memes.number == (memes.totalPages - 1)} ? 'disabled'">
+                            <a class="page-link" th:href="@{/users/__${user.id}__/(page=${memes.number + 1}, size=${memes.size})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </section>
 

@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import tr.org.linux.kamp.memeapp.memes.Meme;
+import tr.org.linux.kamp.memeapp.memes.MemeService;
 
 import javax.validation.Valid;
 
@@ -21,6 +23,8 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+
+    private final MemeService memeService;
 
     private final UserValidator userValidator;
 
@@ -38,9 +42,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    String show(@PathVariable Long id, Model model) {
+    String show(@PathVariable Long id, Model model, Pageable pageable) {
         User user = userService.findById(id);
+        Page<Meme> memes = memeService.findAll(id, pageable);
         model.addAttribute("user", user);
+        model.addAttribute("memes", memes);
         return "users/show";
     }
 

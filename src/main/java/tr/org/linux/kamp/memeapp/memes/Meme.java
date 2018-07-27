@@ -40,4 +40,11 @@ public class Meme implements Serializable {
     @ManyToMany
     private Set<Label> labels = new HashSet<>();
 
+    public Meme(@NotBlank String name, String description, String artist, @Pattern(regexp = "^http.*") String url, @NotNull User owner) {
+        this.name = name;
+        this.description = description;
+        this.artist = artist;
+        this.url = url;
+        this.owner = owner;
+    }
 }
