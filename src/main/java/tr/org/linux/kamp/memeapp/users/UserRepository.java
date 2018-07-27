@@ -14,6 +14,8 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.memes WHERE u.id = :userId")
     Optional<User> findByIdWithMemes(@Param("userId") Long id);
 
+    Optional<User> findByUsername(@Param("username") String username);
+
     boolean existsByUsername(@Param("username") String username);
 
 }

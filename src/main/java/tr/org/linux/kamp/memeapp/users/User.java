@@ -3,12 +3,15 @@ package tr.org.linux.kamp.memeapp.users;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import tr.org.linux.kamp.memeapp.memes.Meme;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -16,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "APP_USER")
-public class User implements Serializable {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -31,9 +34,15 @@ public class User implements Serializable {
     @Column(unique = true)
     private String email;
 
+    @NotBlank
+    private String password;
+
     private String firstName;
 
     private String lastName;
+
+    @Transient
+    private Set<Role> authorities;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<Meme> memes;
@@ -43,6 +52,36 @@ public class User implements Serializable {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override

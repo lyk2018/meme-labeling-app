@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import tr.org.linux.kamp.memeapp.memes.Meme;
 import tr.org.linux.kamp.memeapp.memes.MemeService;
 import tr.org.linux.kamp.memeapp.users.User;
@@ -22,15 +24,21 @@ public class MemeAppApplication {
     }
 
     @Bean
-    CommandLineRunner myMethod(UserService userService, MemeService memeService) {
+	public PasswordEncoder passwordEncoder() {
+    	return new BCryptPasswordEncoder();
+	}
+
+    @Bean
+    CommandLineRunner myMethod(UserService userService, MemeService memeService, PasswordEncoder passwordEncoder) {
         return args -> {
         	if (!userService.existsByUsername("username0")) {
-				for (int i = 0; i < 40; i++) {
+				for (int i = 0; i < 10; i++) {
 					String username = "username" + i;
 					String email = "user" + i + "@mailinator.com";
 					String firstName = "First" + i;
 					String lastName = "Doe";
 					User user = new User(username, email, firstName, lastName);
+					user.setPassword(passwordEncoder.encode("password"));
 					userService.save(user);
 
 					for (int j = 0; j < 50; j++) {
