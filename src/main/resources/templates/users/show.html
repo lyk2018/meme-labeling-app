@@ -53,20 +53,7 @@
 
         <section>
             <div class="row">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item" th:classappend="${memes.number == 0} ? 'disabled'">
-                            <a class="page-link" th:href="@{/users/__${user.id}__/(page=${memes.number - 1}, size=${memes.size})}">Previous</a>
-                        </li>
-                        <li class="page-item" th:classappend="${memes.number == (index - 1)} ? 'active'"
-                            th:each="index : ${#numbers.sequence(1, memes.totalPages)}">
-                            <a class="page-link" th:href="@{/users/__${user.id}__/(page=${index-1}, size=${memes.size})}" th:text="${index}"></a>
-                        </li>
-                        <li class="page-item" th:classappend="${memes.number == (memes.totalPages - 1)} ? 'disabled'">
-                            <a class="page-link" th:href="@{/users/__${user.id}__/(page=${memes.number + 1}, size=${memes.size})}">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                <th:block th:include="utils::pagination(${memes.number}, ${memes.size}, ${memes.totalPages})"></th:block>
             </div>
         </section>
 

@@ -39,20 +39,7 @@
         </div>
 
         <div class="row">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="${users.number == 0} ? 'disabled'">
-                        <a class="page-link" th:href="@{/users(page=${users.number - 1}, size=${users.size})}">Previous</a>
-                    </li>
-                    <li class="page-item" th:classappend="${users.number == (index - 1)} ? 'active'"
-                        th:each="index : ${#numbers.sequence(1, users.totalPages)}">
-                        <a class="page-link" th:href="@{/users(page=${index-1}, size=${users.size})}" th:text="${index}"></a>
-                    </li>
-                    <li class="page-item" th:classappend="${users.number == (users.totalPages - 1)} ? 'disabled'">
-                        <a class="page-link" th:href="@{/users(page=${users.number + 1}, size=${users.size})}">Next</a>
-                    </li>
-                </ul>
-            </nav>
+            <th:block th:include="utils::pagination(${users.number}, ${users.size}, ${users.totalPages})"></th:block>
         </div>
     </div>
 
